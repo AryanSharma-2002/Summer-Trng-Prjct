@@ -3,7 +3,6 @@ const { Subject } = require("../models/subjectModel");
 const { Teacher } = require("../models/teacherModel");
 
 const addTeacher = expressAsyncHandler(async (req, res) => {
-  // ab isme hume frontend mai tid leni hogi uss tid se _id find krke uss document ki _id backend mai send krdo aur ab isme add krdo simply
   const { teacherRefId, newSubjects } = req.body;
   console.log(teacherRefId, newSubjects);
   if (!teacherRefId) {
@@ -25,7 +24,6 @@ const addTeacher = expressAsyncHandler(async (req, res) => {
     res.status(200).json(fullTeacher);
     return;
   }
-
   try {
     const result = await Teacher.create({
       teacherRefId: teacherRefId,
