@@ -13,29 +13,12 @@ const addTeacher = expressAsyncHandler(async (req, res) => {
   const [alreadyAdded] = await Teacher.find({ teacherRefId: teacherRefId });
   console.log(alreadyAdded);
   if (alreadyAdded) {
-    // const oldSubjects = alreadyAdded.subjects;
-    // newSubjects.forEach((val, i) => {
-    //   if (oldSubjects.includes(val)) {
-    //     newSubjects.splice(i, 1);
-    //   }
-    // });
-    // let result = await Teacher.updateOne(
-    //   { tid: tid },
-    //   {
-    //     $set: {
-    //       name: name,
-    //       subjects: [...alreadyAdded.subjects, ...newSubjects],
-    //     },
-    //   },
-    //   { new: true }
-    // );
     const result = await Teacher.updateOne(
       { teacherRefId: teacherRefId },
       {
         $addToSet: { subjects: { $each: newSubjects } },
       }
     );
-
     const fullTeacher = await Teacher.find({ teacherRefId })
       .populate("teacherRefId", "-_id")
       .populate("subjects");
