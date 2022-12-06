@@ -44,7 +44,6 @@ const addTeacher = expressAsyncHandler(async (req, res) => {
 const removeTeacher = expressAsyncHandler(async (req, res) => {
   const { teacherRefId, deleteSubs } = req.body;
   if (!deleteSubs || deleteSubs.length === 0) {
-    // means only tid di hai sara teacher remove krdo
     try {
       const result = await Teacher.deleteOne({ teacherRefId: teacherRefId });
       res.status(200).json(result);
@@ -66,15 +65,6 @@ const removeTeacher = expressAsyncHandler(async (req, res) => {
       { new: true }
     );
     res.status(200).json(updatedTeacher);
-    // result.subjects.filter((sub) => {
-    //   return deleteSubs.includes(sub) == false;
-    // });
-    // result = await Teacher.updateOne(
-    //   {
-    //     tid: tid,
-    //   },
-    //   { $set: { subjects: result } }
-    // );
   } catch (error) {
     console.log("Error removing subject from teacher", error.message);
     res.status(400).json(error.message);
